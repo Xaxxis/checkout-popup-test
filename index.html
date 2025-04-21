@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flip Checkout Demo</title>
+</head>
+<body>
+
+  <h1>Flip Demo Store</h1>
+  <h2>Product: Flip Tumbler</h2>
+  <p>Price: IDR 150.000</p>
+  <img src="https://via.placeholder.com/300x200" alt="Flip Tumbler" width="300" height="200">
+
+  <h3>Order Details</h3>
+  <p>Item: Flip Tumbler x1</p>
+  <p>Total: IDR 150.000</p>
+
+  <button id="checkout-button">Pay IDR 150.000</button>
+
+  <p>Powered by Flip</p>
+
+  <script>
+    // Load FlipCheckout script
+    const script = document.createElement('script');
+    script.src = 'https://storage.googleapis.com/flip-prod-pay-checkout-popup-assets/checkout.iife.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    // Handle checkout
+    document.getElementById('checkout-button').addEventListener('click', function () {
+      if (typeof FlipCheckout === 'undefined') {
+        alert('Checkout script not loaded yet. Please try again in a moment.');
+        return;
+      }
+
+      FlipCheckout.start();
+
+      const dummyData = {
+        company_code: 'DUMMY_COMPANY',
+        product_code: 'DUMMY_PRODUCT',
+      };
+
+      console.log('Simulating FlipCheckout.pay with:', dummyData);
+
+      FlipCheckout.pay(dummyData.company_code, dummyData.product_code, {
+        onSuccess: (params) => console.log('Payment Success:', params),
+        onPending: (params) => console.log('Payment Pending:', params),
+        onClose: (params) => console.log('Modal Closed:', params),
+        successClosePopupDuration: 5000,
+      });
+    });
+  </script>
+
+</body>
+</html>
